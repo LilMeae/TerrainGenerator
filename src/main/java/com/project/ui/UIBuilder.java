@@ -21,6 +21,7 @@ public class UIBuilder {
     private TextField seedField;
     private Slider sizeSlider;
     private Button generateButton;
+    private Button saveButton;
     private ImageView mapView;
 
     public Slider getWaterSlider(){
@@ -37,6 +38,9 @@ public class UIBuilder {
     }
     public Button getGenerateButton(){
         return generateButton;
+    }
+    public Button getSaveButton(){
+        return saveButton;
     }
     public ImageView getMapView(){
         return mapView;
@@ -69,6 +73,9 @@ public class UIBuilder {
         this.generateButton = new Button("Generate");
         generateButton.setPrefWidth(width * 0.2);
 
+        this.saveButton = new Button("Save as PNG");
+        saveButton.setPrefWidth(width * 0.2);
+
         VBox control = new VBox();
         control.setPrefWidth(width * 0.25);
         control.setStyle("-fx-background-color: #2f2c2c6f;");
@@ -79,7 +86,7 @@ public class UIBuilder {
             snowLabel, snowSlider,
             seedLabel, seedRow,
             sizeLabel, sizeSlider,
-            generateButton
+            generateButton, saveButton
         );
         
         this.mapView = new ImageView();
