@@ -1,15 +1,23 @@
 package com.project;
 
 import java.awt.image.BufferedImage;
+import com.google.common.hash;
 
 public class NoiseGenerator {
-    private static int imageWidth;
-    private static int imageHeight;
-    private static int seed;
     
-    public enum NoiseTypes{
+    public static enum NoiseType{
+        VALUE,
         PERLIN,
         SIMPLEX,
         RANDOM
+    }
+
+    public static int[][] generateNoise(int height, int width, NoiseType noise){
+        int[][] heightMap = new int[height][width];
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){     
+            }
+        }
+        return heightMap;
     }
 }
