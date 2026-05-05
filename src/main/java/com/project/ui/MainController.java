@@ -2,7 +2,14 @@ package com.project.ui;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import javafx.embed.swing.SwingFXUtils;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainController {
     private UIBuilder ui;
@@ -10,6 +17,7 @@ public class MainController {
     public MainController(UIBuilder ui){
         this.ui = ui;
         ui.getGenerateButton().setOnAction(e -> onGenerate());
+        ui.getSaveButton().setOnAction(e -> onSave());
     }
 
     private void onGenerate(){
@@ -31,5 +39,20 @@ public class MainController {
         }
 
         ui.getMapView().setImage(SwingFXUtils.toFXImage(img, null));
+    }
+
+    private void onSave(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Terrain Map");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null){
+            try {
+                BufferedImage img = SwingFXUtils.fromFXImage(ui.getMapView().getImage(), null);
+                ImageIO.write(img, "png", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
