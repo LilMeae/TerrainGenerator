@@ -26,7 +26,7 @@ public class NoiseGenerator {
         int[][] heightMap = new int[height][width];
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
-                heightMap[y][x] = noiseParent.getNoise();
+                heightMap[y][x] = noiseParent.getNoise(x, y);
                 System.out.print(heightMap[y][x]+" ");
             }
             System.out.println();

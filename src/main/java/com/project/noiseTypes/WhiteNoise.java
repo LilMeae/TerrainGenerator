@@ -1,23 +1,22 @@
 package com.project.noiseTypes;
 
-import java.util.Random;
+import com.project.Hash;
+
 
 public class WhiteNoise implements NoiseParent{
     private long seed;
-    private Random random;
-
+    
     public WhiteNoise(long seed){
         this.seed = seed;
-        random = new Random(this.seed);
     }
 
-    public int getNoise(){
-        return (int)Math.round(random.nextDouble()*255.0);
+    public int getNoise(int x, int y){
+        return (int)Math.round(Hash.seededPcgHash(x+y, seed)*255.0);
     }
 
-    public int getNoise(long seed){
+    public int getNoise(long seed, int x, int y){
         setSeed(seed);
-        return getNoise();
+        return getNoise(x, y);
     }
 
     public void setSeed(long seed){
