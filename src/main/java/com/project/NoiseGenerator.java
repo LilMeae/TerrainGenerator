@@ -1,7 +1,6 @@
 package com.project;
 
 import java.awt.image.BufferedImage;
-import com.google.common.hash;
 
 public class NoiseGenerator {
     
