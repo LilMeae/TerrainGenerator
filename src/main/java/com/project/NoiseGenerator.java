@@ -27,4 +27,12 @@ public class NoiseGenerator {
         long hash = Long.rotateRight(xorshifted, rot) & 0x7FFFFFFFFFFFFFFFL;
         return (double) hash / 9223372036854775807L;
     }
+
+    public static double smoothstep(double t) {
+    return t * t * (3 - 2 * t);
+    }
+
+    public static double lerp(double a, double b, double t) {
+        return a + t * (b - a);
+    }
 }
