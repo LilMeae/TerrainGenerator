@@ -11,7 +11,7 @@ public class WhiteNoise implements NoiseParent{
     }
 
     public int getNoise(int x, int y){
-        return (int)Math.round(Hash.seededPcgHash(x+y, seed)*255.0);
+        return (int)Math.round((Hash.hashToDouble(x+y, seed))*255.0);
     }
 
     public int getNoise(long seed, int x, int y){
