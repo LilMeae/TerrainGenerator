@@ -1,17 +1,8 @@
 package com.project;
 
-import com.project.noiseTypes.NoiseParent;
-import com.project.noiseTypes.WhiteNoise;
-
 public class NoiseGenerator {
-    private long seed;
-    private NoiseParent noiseParent;
 
-    public NoiseGenerator(long seed){
-        this.seed = seed;
-    }
-    
-    public static enum NoiseType{
+    public static enum NoiseType {
         WHITE,
         VALUE,
         PERLIN,
@@ -19,18 +10,21 @@ public class NoiseGenerator {
         RANDOM
     }
 
-    public int[][] generateNoise(int height, int width, NoiseType noise){
-        if(noise == NoiseType.WHITE){
-            noiseParent = new WhiteNoise(seed);
-        }
-        int[][] heightMap = new int[height][width];
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                heightMap[y][x] = noiseParent.getNoise(x, y);
-                System.out.print(heightMap[y][x]+" ");
-            }
-            System.out.println();
-        }
-        return heightMap;
+    public static int[][] generateNoise(int height, int width, long seed, NoiseType noise) {
+        return new int[1][1];
+    }
+
+    /**
+     * Does a pcg hash and returns a pseudo random value between 0.0 and 1.0
+     * @param input input number
+     * @param seed seed
+     * @return double from 0.0 - 1.0
+     */
+    public static double doubleHash(long input, long seed) {
+        long state = (input ^ seed) * 6364136223846793005L + 1442695040888963407L;
+        long xorshifted = ((state >>> 18) ^ state) >>> 27;
+        int rot = (int) (state >>> 59);
+        long hash = Long.rotateRight(xorshifted, rot) & 0x7FFFFFFFFFFFFFFFL;
+        return (double) hash / 9223372036854775807L;
     }
 }
