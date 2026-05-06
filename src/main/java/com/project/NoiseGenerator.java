@@ -1,5 +1,8 @@
 package com.project;
 
+import com.project.noiseTypes.ValueNoise;
+import com.project.noiseTypes.WhiteNoise;
+
 public class NoiseGenerator {
 
     public static enum NoiseType {
@@ -10,7 +13,13 @@ public class NoiseGenerator {
         RANDOM
     }
 
-    public static int[][] generateNoise(int height, int width, long seed, NoiseType noise) {
+    public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, NoiseType noise) {
+        if(noise == NoiseType.VALUE){
+            return new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+        }
+        else if(noise == NoiseType.WHITE){
+            return new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+        }
         return new int[1][1];
     }
 
