@@ -12,7 +12,7 @@ public class ValueNoise implements NoiseTemplate {
         double[][] noiseArray = new double[noiseScale + 1][noiseScale + 1];
         for (int y = 0; y < noiseArray.length; y++) {
             for (int x = 0; x < noiseArray[y].length; x++) {
-                noiseArray[y][x] = NoiseGenerator.doubleHash(x + y, seed);
+                noiseArray[y][x] = NoiseGenerator.doubleHash(x * 73856093L ^ y * 19349663L, seed);
             }
         }
 

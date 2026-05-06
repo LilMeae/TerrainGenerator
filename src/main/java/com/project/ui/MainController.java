@@ -36,7 +36,7 @@ public class MainController {
         System.out.println("Seed: " + seed);
 
         ValueNoise noiseGen = new ValueNoise();
-        int heightMap[][] = noiseGen.generateNoise(seed, size, size, 8);
+        int heightMap[][] = noiseGen.generateNoise(seed, size, size, 10);
 
         BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < size; y++){
@@ -51,6 +51,7 @@ public class MainController {
     }
 
     private Color getTerrainColor(float value, double waterLevel, double snowLevel){
+        if (value < waterLevel - 0.15f) return new Color(10, 30, 100);
         if (value < waterLevel) return new Color(30, 100, 200);
         if (value < waterLevel + 0.05f) return new Color(210, 180, 140);
         if (value > snowLevel) return new Color(255, 255, 255);
