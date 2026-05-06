@@ -70,12 +70,43 @@ public class MainController {
     }
 
     private Color getTerrainColor(float value, double waterLevel, double snowLevel){
-        if (value < waterLevel - 0.15f) return new Color(10, 30, 100);
-        if (value < waterLevel) return new Color(30, 100, 200);
-        if (value < waterLevel + 0.05f) return new Color(210, 180, 140);
-        if (value > snowLevel) return new Color(255, 255, 255);
-        if (value > snowLevel - 0.1f) return new Color(140, 140, 140);
-        return new Color(60, 160, 60);
+        //water to sand
+        if (value < waterLevel) {
+            double deepEnd = waterLevel * 0.5;
+            if (value < deepEnd) return new Color(10, 50, 150);
+            double t = (value - deepEnd) / (waterLevel - deepEnd);
+            return blendColors(new Color(10, 50, 150), new Color(60, 140, 210), t);
+        }       
+
+        //sand to grass
+        double sandEnd = waterLevel + 0.05f;
+        if (value < sandEnd) {
+            double t = (value - waterLevel) / (sandEnd - waterLevel);
+            return blendColors(new Color(210, 180, 140), new Color(210, 180, 140), t);
+        }
+
+        //grass to mountain
+        double mountainStart = snowLevel - 0.15;
+        if (value < mountainStart) {
+            double t = (value - sandEnd) / (mountainStart - sandEnd);
+            return blendColors(new Color(60, 160, 60), new Color(100, 120, 60), t);
+        }
+
+        //mountain to snow
+        if (value < snowLevel) {
+            double t = (value - mountainStart) / (snowLevel - mountainStart);
+            return blendColors(new Color(140, 140, 140), new Color(220, 220, 220), t);
+        }
+
+        //snow
+        return new Color(255, 255, 255);
+    }
+
+    private Color blendColors(Color a, Color b, double t){
+        int r = (int)(a.getRed() + t * (b.getRed() - a.getRed()));
+        int g = (int)(a.getGreen() + t * (b.getGreen() - a.getGreen()));
+        int bl = (int)(a.getBlue() + t * (b.getBlue()  - a.getBlue()));
+        return new Color(r, g, bl);
     }
 
     private void onSave(){
