@@ -27,19 +27,19 @@ public class ValueNoise implements NoiseTemplate {
                 int x1 = x0 + 1;
                 int y1 = y0 + 1;
 
-                double tx = NoiseGenerator.smoothstep(xMid - x0);
-                double ty = NoiseGenerator.smoothstep(yMid - y0);
+                double tx = NoiseGenerator.smoothstep(xMid - x0);//Amount to interpolate by
+                double ty = NoiseGenerator.smoothstep(yMid - y0);//Amount to interpolate by
 
-                double v00 = noiseArray[x0][y0];
-                double v10 = noiseArray[x1][y0];
-                double v01 = noiseArray[x0][y1];
-                double v11 = noiseArray[x1][y1];
+                double corner00 = noiseArray[x0][y0];
+                double corner10 = noiseArray[x1][y0];
+                double corner01 = noiseArray[x0][y1];
+                double corner11 = noiseArray[x1][y1];
 
-                double i1 = NoiseGenerator.lerp(v00, v10, tx);
-                double i2 = NoiseGenerator.lerp(v01, v11, tx);
-                double value = NoiseGenerator.lerp(i1, i2, ty);
+                double bottomEdgeX = NoiseGenerator.lerp(corner00, corner10, tx);
+                double topEdgeX = NoiseGenerator.lerp(corner01, corner11, tx);
+                double value = NoiseGenerator.lerp(bottomEdgeX, topEdgeX, ty);
 
-                finalArray[x][y] = (int) (value * 255);
+                finalArray[x][y] = (int)Math.round((value * 255));
                 System.out.print(finalArray[x][y]+" ");
             }
             System.out.println();
