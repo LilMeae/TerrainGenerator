@@ -7,6 +7,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.project.NoiseGenerator;
+import com.project.NoiseGenerator.NoiseType;
+import com.project.noiseTypes.ValueNoise;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -24,21 +28,34 @@ public class MainController {
         double water = ui.getWaterSlider().getValue();
         double snow = ui.getSnowSlider().getValue();
         int size = (int)ui.getSizeSlider().getValue();
-        String seed = ui.getSeedField().getText();
+        long seed = Long.parseLong(ui.getSeedField().getText());
 
         System.out.println("Water: " + water);
         System.out.println("Snow: " + snow);
         System.out.println("Size: " + size);
         System.out.println("Seed: " + seed);
 
+        ValueNoise noiseGen = new ValueNoise();
+        int heightMap[][] = noiseGen.generateNoise(seed, size, size, 8);
+
         BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
-        for (int x = 0; x < size; x++){
-            for (int y = 0; y < size; y++){
-                img.setRGB(x, y, new Color(255, 0, 0).getRGB());
+        for (int y = 0; y < size; y++){
+            for (int x = 0; x < size; x++){
+                float value = heightMap[y][x] / 255f;
+                Color color = getTerrainColor(value, water, snow);
+                img.setRGB(x, y, color.getRGB());
             }
         }
 
         ui.getMapView().setImage(SwingFXUtils.toFXImage(img, null));
+    }
+
+    private Color getTerrainColor(float value, double waterLevel, double snowLevel){
+        if (value < waterLevel) return new Color(30, 100, 200);
+        if (value < waterLevel + 0.05f) return new Color(210, 180, 140);
+        if (value > snowLevel) return new Color(255, 255, 255);
+        if (value > snowLevel - 0.1f) return new Color(140, 140, 140);
+        return new Color(60, 160, 60);
     }
 
     private void onSave(){
