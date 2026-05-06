@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -23,6 +24,8 @@ public class UIBuilder {
     private Button generateButton;
     private Button saveButton;
     private ImageView mapView;
+    private Slider noiseScaleSlider;
+    private ComboBox<String> noiseTypeSelector;
 
     public Slider getWaterSlider(){
         return waterSlider;
@@ -44,6 +47,12 @@ public class UIBuilder {
     }
     public ImageView getMapView(){
         return mapView;
+    }
+    public Slider getNoiseScaleSlider(){
+        return noiseScaleSlider;
+    }
+    public ComboBox<String> getNoiseTypeSelector(){
+        return noiseTypeSelector;
     }
 
     public HBox buildLayout(double width, double height){
@@ -70,11 +79,23 @@ public class UIBuilder {
         sizeSlider.setShowTickLabels(true);
         sizeSlider.setPrefWidth(width * 0.2);
 
+        Label noiseScaleLabel = new Label("Noise Scale");
+        this.noiseScaleSlider = new Slider(1, 20, 8);
+        noiseScaleSlider.setShowTickLabels(true);
+        noiseScaleSlider.setPrefWidth(width * 0.2);
+
         this.generateButton = new Button("Generate");
         generateButton.setPrefWidth(width * 0.2);
 
         this.saveButton = new Button("Save as PNG");
         saveButton.setPrefWidth(width * 0.2);
+
+        Label noiseTypeLabel = new Label("Noise Type");
+        this.noiseTypeSelector = new ComboBox<>();
+        noiseTypeSelector.getItems().addAll("Value", "Perlin", "Random", "White", "Simplex");
+        noiseTypeSelector.setValue("Perlin");
+        noiseTypeSelector.setPrefWidth(width * 0.2);
+
 
         VBox control = new VBox();
         control.setPrefWidth(width * 0.25);
@@ -86,6 +107,8 @@ public class UIBuilder {
             snowLabel, snowSlider,
             seedLabel, seedRow,
             sizeLabel, sizeSlider,
+            noiseScaleLabel, noiseScaleSlider,
+            noiseTypeLabel, noiseTypeSelector,
             generateButton, saveButton
         );
         

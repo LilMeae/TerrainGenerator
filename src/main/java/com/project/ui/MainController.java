@@ -9,7 +9,12 @@ import javax.imageio.ImageIO;
 
 import com.project.NoiseGenerator;
 import com.project.NoiseGenerator.NoiseType;
+import com.project.noiseTypes.NoiseTemplate;
+import com.project.noiseTypes.PerlinNoise;
+import com.project.noiseTypes.RandomNoise;
+import com.project.noiseTypes.SimplexNoise;
 import com.project.noiseTypes.ValueNoise;
+import com.project.noiseTypes.WhiteNoise;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.stage.FileChooser;
@@ -29,14 +34,28 @@ public class MainController {
         double snow = ui.getSnowSlider().getValue();
         int size = (int)ui.getSizeSlider().getValue();
         long seed = Long.parseLong(ui.getSeedField().getText());
+        int noiseScale = (int) ui.getNoiseScaleSlider().getValue();
+        String noiseType = ui.getNoiseTypeSelector().getValue();
 
-        System.out.println("Water: " + water);
-        System.out.println("Snow: " + snow);
-        System.out.println("Size: " + size);
-        System.out.println("Seed: " + seed);
-
-        ValueNoise noiseGen = new ValueNoise();
-        int heightMap[][] = noiseGen.generateNoise(seed, size, size, 10);
+        NoiseTemplate noiseGen;
+        switch (noiseType) {
+            case "Value":
+                noiseGen = new ValueNoise();
+                break;
+            case "Perlin":
+                noiseGen = new PerlinNoise();
+                break;
+            case "Simplex":
+                noiseGen = new SimplexNoise();
+                break;
+            case "White":
+                noiseGen = new WhiteNoise();
+                break;
+            default:
+                noiseGen = new RandomNoise();
+                break;
+        }
+        int heightMap[][] = noiseGen.generateNoise(seed, size, size, noiseScale);
 
         BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < size; y++){
