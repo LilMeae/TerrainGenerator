@@ -1,10 +1,6 @@
 package com.project.ui;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -12,9 +8,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class UIBuilder {
     private Slider waterSlider;
@@ -92,7 +86,7 @@ public class UIBuilder {
 
         Label noiseTypeLabel = new Label("Noise Type");
         this.noiseTypeSelector = new ComboBox<>();
-        noiseTypeSelector.getItems().addAll("Value", "Perlin", "Random", "White", "Simplex");
+        noiseTypeSelector.getItems().addAll("Value", "Perlin", "White", "Simplex");
         noiseTypeSelector.setValue("Perlin");
         noiseTypeSelector.setPrefWidth(width * 0.2);
 

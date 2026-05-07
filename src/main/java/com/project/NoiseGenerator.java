@@ -1,5 +1,7 @@
 package com.project;
 
+import com.project.noiseTypes.PerlinNoise;
+import com.project.noiseTypes.SimplexNoise;
 import com.project.noiseTypes.ValueNoise;
 import com.project.noiseTypes.WhiteNoise;
 
@@ -9,18 +11,17 @@ public class NoiseGenerator {
         WHITE,
         VALUE,
         PERLIN,
-        SIMPLEX,
-        RANDOM
+        SIMPLEX
     }
 
     public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, NoiseType noise) {
-        if(noise == NoiseType.VALUE){
-            return new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-        }
-        else if(noise == NoiseType.WHITE){
-            return new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-        }
-        return new int[1][1];
+        return switch (noise) {
+            case VALUE -> new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            case WHITE -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            case PERLIN -> new PerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            case SIMPLEX -> new SimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            default -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+        };
     }
 
     /**
