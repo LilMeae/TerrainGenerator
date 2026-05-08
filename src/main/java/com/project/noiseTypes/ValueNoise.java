@@ -7,6 +7,11 @@ public class ValueNoise implements NoiseTemplate {
     public ValueNoise(){};
 
     @Override
+    public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
+        return generateNoise(seed, xWidth, yWidth, noiseScale);
+    }
+
+
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale) {
         double[][] noiseArray = new double[noiseScale + 1][noiseScale + 1];
         for (int y = 0; y < noiseArray.length; y++) {

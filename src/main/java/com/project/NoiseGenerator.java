@@ -16,13 +16,13 @@ public class NoiseGenerator {
         FRACTAL_PERLIN
     }
 
-    public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, NoiseType noise) {
+    public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, double persistence, int octaves, double lacunarity, NoiseType noise) {
         return switch (noise) {
             case VALUE -> new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case WHITE -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case PERLIN -> new PerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case SIMPLEX -> new SimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-            case FRACTAL_PERLIN -> new PerlinFractalNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            case FRACTAL_PERLIN -> new PerlinFractalNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             default -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
         };
     }
@@ -47,5 +47,21 @@ public class NoiseGenerator {
 
     public static double lerp(double a, double b, double t) {
         return a + t * (b - a);
+    }
+
+    public static double fade(double t){
+        return t * t * t * (t * (t * 6 - 15) + 10);
+    }
+
+    public static double dotGradient(long seed, int gx, int gy, double px, double py){
+        double[] gradient = getGradient(seed, gx, gy);
+        double dx = px - gx;
+        double dy = py - gy;
+        return dx * gradient[0] + dy * gradient[1];
+    }
+
+    public static double[] getGradient(long seed, int gx, int gy){
+        double angle = NoiseGenerator.doubleHash(gx * 73856093L ^ gy * 19349663L, seed) * 2 * Math.PI;
+        return new double[]{Math.cos(angle), Math.sin(angle)};
     }
 }

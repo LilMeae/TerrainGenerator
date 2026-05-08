@@ -19,6 +19,9 @@ public class UIBuilder {
     private Button saveButton;
     private ImageView mapView;
     private Slider noiseScaleSlider;
+    private Slider persistenceSlider;
+    private Slider octaveSlider;
+    private Slider lacunaritySlider;
     private ComboBox<String> noiseTypeSelector;
 
     public Slider getWaterSlider(){
@@ -45,6 +48,19 @@ public class UIBuilder {
     public Slider getNoiseScaleSlider(){
         return noiseScaleSlider;
     }
+
+    public Slider getPersistenceSlider(){
+        return persistenceSlider;
+    }
+
+    public Slider getOctaveSlider(){
+        return octaveSlider;
+    }
+
+    public Slider getLacunaritySlider(){
+        return lacunaritySlider;
+    }
+
     public ComboBox<String> getNoiseTypeSelector(){
         return noiseTypeSelector;
     }
@@ -78,6 +94,21 @@ public class UIBuilder {
         noiseScaleSlider.setShowTickLabels(true);
         noiseScaleSlider.setPrefWidth(width * 0.2);
 
+        Label persistanceLabel = new Label("Persistence");
+        this.persistenceSlider = new Slider(0, 1, 0.05);
+        persistenceSlider.setShowTickLabels(true);
+        persistenceSlider.setPrefHeight(width * 0.2);
+
+        Label octaveLabel = new Label("Octaves");
+        this.octaveSlider = new Slider(1, 12, 1);
+        octaveSlider.setShowTickLabels(true);
+        octaveSlider.setPrefHeight(width * 0.2);
+
+        Label lacunarityLabel = new Label("Lacunarity");
+        this.lacunaritySlider = new Slider(0, 1, 0.05);
+        lacunaritySlider.setShowTickLabels(true);
+        lacunaritySlider.setPrefHeight(width * 0.2);
+
         this.generateButton = new Button("Generate");
         generateButton.setPrefWidth(width * 0.2);
 
@@ -103,7 +134,10 @@ public class UIBuilder {
             sizeLabel, sizeSlider,
             noiseScaleLabel, noiseScaleSlider,
             noiseTypeLabel, noiseTypeSelector,
-            generateButton, saveButton
+            generateButton, saveButton,
+            persistanceLabel, persistenceSlider,
+            lacunarityLabel, lacunaritySlider,
+            octaveLabel, octaveSlider
         );
         
         this.mapView = new ImageView();

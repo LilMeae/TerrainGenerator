@@ -30,6 +30,9 @@ public class MainController {
         long seed = Long.parseLong(ui.getSeedField().getText());
         int noiseScale = (int) ui.getNoiseScaleSlider().getValue();
         String noiseType = ui.getNoiseTypeSelector().getValue();
+        double persistance = ui.getPersistenceSlider().getValue();
+        int octaves = (int)ui.getOctaveSlider().getValue();
+        double lacunarity = ui.getLacunaritySlider().getValue();
         NoiseType noiseTypeValue;
 
         noiseTypeValue = switch (noiseType) {
@@ -39,7 +42,7 @@ public class MainController {
             case "Fractal Perlin" -> NoiseType.FRACTAL_PERLIN;
             default -> NoiseType.WHITE;
         };
-        int heightMap[][] = NoiseGenerator.generateNoise(size, size, noiseScale,seed, noiseTypeValue);
+        int heightMap[][] = NoiseGenerator.generateNoise(size, size, noiseScale,seed, persistance, octaves, lacunarity, noiseTypeValue);
 
         BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < size; y++){
