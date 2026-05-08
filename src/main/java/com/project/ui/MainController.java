@@ -36,6 +36,7 @@ public class MainController {
             case "Value" -> NoiseType.VALUE;
             case "Perlin" -> NoiseType.PERLIN;
             case "Simplex" -> NoiseType.SIMPLEX;
+            case "Fractal Perlin" -> NoiseType.FRACTAL_PERLIN;
             default -> NoiseType.WHITE;
         };
         int heightMap[][] = NoiseGenerator.generateNoise(size, size, noiseScale,seed, noiseTypeValue);

@@ -86,7 +86,7 @@ public class UIBuilder {
 
         Label noiseTypeLabel = new Label("Noise Type");
         this.noiseTypeSelector = new ComboBox<>();
-        noiseTypeSelector.getItems().addAll("Value", "Perlin", "White", "Simplex");
+        noiseTypeSelector.getItems().addAll("Value", "Perlin", "White", "Simplex", "Fractal Perlin");
         noiseTypeSelector.setValue("Perlin");
         noiseTypeSelector.setPrefWidth(width * 0.2);
 
