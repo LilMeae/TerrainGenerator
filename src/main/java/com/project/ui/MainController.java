@@ -16,11 +16,13 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainController {
     private UIBuilder ui;
+    private String[] specialNoiseTypes = {"Fractal Perlin"};
 
     public MainController(UIBuilder ui){
         this.ui = ui;
         ui.getGenerateButton().setOnAction(e -> onGenerate());
         ui.getSaveButton().setOnAction(e -> onSave());
+        ui.getNoiseTypeSelector().setOnAction(e -> onChangeTerrainType());
     }
 
     private void onGenerate(){
@@ -108,6 +110,21 @@ public class MainController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void onChangeTerrainType(){
+        boolean special = false;
+        for(String noise : specialNoiseTypes){
+            if(noise.equals(ui.getNoiseTypeSelector().getValue())){
+                special = true;
+            }
+        }
+        if(special){
+            ui.addSpecialSliders(ui.getLayout());
+        }
+        else{
+            ui.removeSpecialSliders(ui.getLayout());
         }
     }
 }

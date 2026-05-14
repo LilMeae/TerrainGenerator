@@ -19,10 +19,14 @@ public class UIBuilder {
     private Button saveButton;
     private ImageView mapView;
     private Slider noiseScaleSlider;
+    private Label persistenceLabel;
     private Slider persistenceSlider;
+    private Label octaveLabel;
     private Slider octaveSlider;
+    private Label lacunarityLabel;
     private Slider lacunaritySlider;
     private ComboBox<String> noiseTypeSelector;
+    private HBox layout;
 
     public Slider getWaterSlider(){
         return waterSlider;
@@ -65,7 +69,11 @@ public class UIBuilder {
         return noiseTypeSelector;
     }
 
-    public HBox buildLayout(double width, double height){
+    public HBox getLayout(){
+        return layout;
+    }
+
+    public void buildLayout(double width, double height){
         Label waterLabel = new Label("Water Level");
         this.waterSlider = new Slider(0, 1, 0.4);
         waterSlider.setShowTickLabels(true);
@@ -94,17 +102,17 @@ public class UIBuilder {
         noiseScaleSlider.setShowTickLabels(true);
         noiseScaleSlider.setPrefWidth(width * 0.2);
 
-        Label persistanceLabel = new Label("Persistence");
+        persistenceLabel = new Label("Persistence");
         this.persistenceSlider = new Slider(0, 1, 0.05);
         persistenceSlider.setShowTickLabels(true);
         persistenceSlider.setPrefHeight(width * 0.2);
 
-        Label octaveLabel = new Label("Octaves");
+        octaveLabel = new Label("Octaves");
         this.octaveSlider = new Slider(1, 12, 1);
         octaveSlider.setShowTickLabels(true);
         octaveSlider.setPrefHeight(width * 0.2);
 
-        Label lacunarityLabel = new Label("Lacunarity");
+        lacunarityLabel = new Label("Lacunarity");
         this.lacunaritySlider = new Slider(0, 1, 0.05);
         lacunaritySlider.setShowTickLabels(true);
         lacunaritySlider.setPrefHeight(width * 0.2);
@@ -118,11 +126,12 @@ public class UIBuilder {
         Label noiseTypeLabel = new Label("Noise Type");
         this.noiseTypeSelector = new ComboBox<>();
         noiseTypeSelector.getItems().addAll("Value", "Perlin", "White", "Simplex", "Fractal Perlin");
-        noiseTypeSelector.setValue("Perlin");
+        noiseTypeSelector.setValue("Fractal Perlin");
         noiseTypeSelector.setPrefWidth(width * 0.2);
 
 
         VBox control = new VBox();
+        control.setId("control");
         control.setPrefWidth(width * 0.25);
         control.setStyle("-fx-background-color: #2f2c2c6f;");
         control.setSpacing(8);
@@ -135,7 +144,7 @@ public class UIBuilder {
             noiseScaleLabel, noiseScaleSlider,
             noiseTypeLabel, noiseTypeSelector,
             generateButton, saveButton,
-            persistanceLabel, persistenceSlider,
+            persistenceLabel, persistenceSlider,
             lacunarityLabel, lacunaritySlider,
             octaveLabel, octaveSlider
         );
@@ -149,6 +158,31 @@ public class UIBuilder {
         map.setStyle("-fx-background-color: #e4dada83;");
         map.getChildren().addAll(mapView);
 
-        return new HBox(control, map);
+        layout = new HBox(control, map);
+    }
+
+    public void removeSpecialSliders(HBox box){
+        VBox vbox = (VBox) box.getChildren().stream()
+         .filter(node -> node instanceof VBox && "control".equals(node.getId()))
+        .findFirst()
+        .orElseThrow(() -> new RuntimeException("Control vBox not found"));
+
+        vbox.getChildren().removeAll(
+            persistenceLabel, persistenceSlider,
+            lacunarityLabel, lacunaritySlider,
+            octaveLabel, octaveSlider
+        );
+    }
+
+    public void addSpecialSliders (HBox box){
+        VBox vbox = (VBox) box.getChildren().stream()
+         .filter(node -> node instanceof VBox && "control".equals(node.getId()))
+        .findFirst()
+        .orElseThrow(() -> new RuntimeException("Control vBox not found"));
+        vbox.getChildren().addAll(
+            persistenceLabel, persistenceSlider,
+            lacunarityLabel, lacunaritySlider,
+            octaveLabel, octaveSlider
+        );
     }
 }

@@ -1,12 +1,8 @@
 package com.project.ui;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -21,7 +17,8 @@ public class MainApp extends Application{
         double height = Screen.getPrimary().getBounds().getHeight();
 
         UIBuilder ui = new UIBuilder();
-        HBox layout = ui.buildLayout(width, height);
+        ui.buildLayout(width, height);
+        HBox layout = ui.getLayout();
         MainController controller = new MainController(ui);
 
         Scene scene = new Scene(layout, width, height);
