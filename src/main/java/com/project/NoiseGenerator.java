@@ -16,8 +16,8 @@ public class NoiseGenerator {
         FRACTAL_PERLIN
     }
 
-    public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, double persistence, int octaves, double lacunarity, NoiseType noise) {
-        return switch (noise) {
+    public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, double persistence, int octaves, double lacunarity, double extremity, NoiseType noise) {
+        int[][] heightMap = switch (noise) {
             case VALUE -> new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case WHITE -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case PERLIN -> new PerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
@@ -25,6 +25,24 @@ public class NoiseGenerator {
             case FRACTAL_PERLIN -> new PerlinFractalNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             default -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
         };
+
+        double max = 0;
+
+        for (int y = 0; y < yWidth; y++) {
+            for (int x = 0; x < xWidth; x++) {
+                heightMap[y][x] = (int) Math.pow(heightMap[y][x], extremity);
+                if (heightMap[y][x] > max) max = heightMap[y][x];
+            }
+        }
+
+        if (max > 0) {
+            for (int y = 0; y < yWidth; y++) {
+                for (int x = 0; x < xWidth; x++) {
+                    heightMap[y][x] = (int) Math.round((heightMap[y][x] / max) * 255);
+                }
+            }
+        }
+        return heightMap;
     }
 
     /**

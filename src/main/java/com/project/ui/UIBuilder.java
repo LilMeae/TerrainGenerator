@@ -19,6 +19,7 @@ public class UIBuilder {
     private Button saveButton;
     private ImageView mapView;
     private Slider noiseScaleSlider;
+    private Slider extremitySlider;
     private Label persistenceLabel;
     private Slider persistenceSlider;
     private Label octaveLabel;
@@ -73,6 +74,10 @@ public class UIBuilder {
         return layout;
     }
 
+    public Slider getExtremitySlider(){
+        return extremitySlider;
+    }
+
     public void buildLayout(double width, double height){
         Label waterLabel = new Label("Water Level");
         this.waterSlider = new Slider(0, 1, 0.4);
@@ -101,6 +106,11 @@ public class UIBuilder {
         this.noiseScaleSlider = new Slider(1, 20, 8);
         noiseScaleSlider.setShowTickLabels(true);
         noiseScaleSlider.setPrefWidth(width * 0.2);
+        
+        Label extremityLabel = new Label ("Extremity");
+        this.extremitySlider = new Slider(1, 10, 1);
+        extremitySlider.setShowTickLabels(true);
+        extremitySlider.setPrefWidth(width*0.2);
 
         persistenceLabel = new Label("Persistence");
         this.persistenceSlider = new Slider(0, 1, 0.05);
@@ -144,6 +154,7 @@ public class UIBuilder {
             noiseScaleLabel, noiseScaleSlider,
             noiseTypeLabel, noiseTypeSelector,
             generateButton, saveButton,
+            extremityLabel, extremitySlider,
             persistenceLabel, persistenceSlider,
             lacunarityLabel, lacunaritySlider,
             octaveLabel, octaveSlider
