@@ -22,7 +22,7 @@ public class MainApp extends Application{
         MainController controller = new MainController(ui);
 
         Scene scene = new Scene(layout, width, height);
-        primaryStage.setTitle("2D Terrain Generator");
+        primaryStage.setTitle("Terrain Generator");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
