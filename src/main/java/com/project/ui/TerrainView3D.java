@@ -8,6 +8,7 @@ import javafx.scene.PointLight;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -30,6 +31,9 @@ public class TerrainView3D {
     private final Rotate yaw   = new Rotate(45,  Rotate.Y_AXIS);
     private final Rotate pitch = new Rotate(-30, Rotate.X_AXIS);
     private final Translate cameraTranslate = new Translate(0, 0, -1.8 * WORLD_EXTENT);
+
+    private double dragLastX;
+    private double dragLastY;
 
     public TerrainView3D(double width, double height) {
         terrainGroup = new Group();
@@ -54,6 +58,39 @@ public class TerrainView3D {
         subScene = new SubScene(root, width, height, true, SceneAntialiasing.BALANCED);
         subScene.setFill(Color.rgb(180, 195, 210));
         subScene.setCamera(camera);
+
+        subScene.setOnMousePressed(e -> {
+            dragLastX = e.getSceneX();
+            dragLastY = e.getSceneY();
+            if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+                resetCamera();
+            }
+        });
+
+        subScene.setOnMouseDragged(e -> {
+            if (e.getButton() != MouseButton.PRIMARY) return;
+            double dx = e.getSceneX() - dragLastX;
+            double dy = e.getSceneY() - dragLastY;
+            dragLastX = e.getSceneX();
+            dragLastY = e.getSceneY();
+
+            yaw.setAngle(yaw.getAngle() + dx * 0.3);
+
+            double newPitch = pitch.getAngle() - dy * 0.3;
+            if (newPitch >  89) newPitch =  89;
+            if (newPitch < -89) newPitch = -89;
+            pitch.setAngle(newPitch);
+        });
+
+        subScene.setOnScroll(e -> {
+            double factor = (e.getDeltaY() > 0) ? 0.9 : 1.1;
+            double newZ = cameraTranslate.getZ() * factor;
+            double minZ = -5.0 * WORLD_EXTENT;
+            double maxZ = -0.2 * WORLD_EXTENT;
+            if (newZ < minZ) newZ = minZ;
+            if (newZ > maxZ) newZ = maxZ;
+            cameraTranslate.setZ(newZ);
+        });
     }
 
     public Node getNode() {
