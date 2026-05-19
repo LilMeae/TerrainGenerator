@@ -6,8 +6,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class UIBuilder {
@@ -34,6 +37,14 @@ public class UIBuilder {
     private Slider lacunaritySlider;
     private Label noiseTypeLabel;
     private ComboBox<String> noiseTypeSelector;
+    private ToggleGroup viewToggleGroup;
+    private ToggleButton view2DButton;
+    private ToggleButton view3DButton;
+    private Label heightScaleLabel;
+    private Slider heightScaleSlider;
+    private Label detailLabel;
+    private Slider detailSlider;
+    private StackPane rightPane;
     private HBox layout;
 
     public Slider getWaterSlider(){
@@ -84,6 +95,13 @@ public class UIBuilder {
     public Slider getExtremitySlider(){
         return extremitySlider;
     }
+
+    public ToggleGroup getViewToggleGroup() { return viewToggleGroup; }
+    public ToggleButton getView2DButton()   { return view2DButton; }
+    public ToggleButton getView3DButton()   { return view3DButton; }
+    public Slider getHeightScaleSlider()    { return heightScaleSlider; }
+    public Slider getDetailSlider()         { return detailSlider; }
+    public StackPane getRightPane()         { return rightPane; }
 
     public void buildLayout(double width, double height){
         waterLabel = new Label("Water Level");
@@ -146,6 +164,26 @@ public class UIBuilder {
         noiseTypeSelector.setValue("Fractal Perlin");
         noiseTypeSelector.setPrefWidth(width * 0.2);
 
+        viewToggleGroup = new ToggleGroup();
+        view2DButton = new ToggleButton("2D");
+        view3DButton = new ToggleButton("3D");
+        view2DButton.setToggleGroup(viewToggleGroup);
+        view3DButton.setToggleGroup(viewToggleGroup);
+        view2DButton.setSelected(true);
+        HBox viewToggleRow = new HBox(8, view2DButton, view3DButton);
+
+        heightScaleLabel = new Label("Height Scale");
+        this.heightScaleSlider = new Slider(0.05, 0.5, 0.25);
+        heightScaleSlider.setShowTickLabels(true);
+        heightScaleSlider.setPrefWidth(width * 0.2);
+
+        detailLabel = new Label("3D Detail");
+        this.detailSlider = new Slider(32, 512, 128);
+        detailSlider.setShowTickLabels(true);
+        detailSlider.setSnapToTicks(true);
+        detailSlider.setMajorTickUnit(32);
+        detailSlider.setMinorTickCount(0);
+        detailSlider.setPrefWidth(width * 0.2);
 
         VBox control = new VBox();
         control.setId("control");
@@ -154,12 +192,15 @@ public class UIBuilder {
         control.setSpacing(8);
         control.setPadding(new Insets(16));
         control.getChildren().addAll(
+            viewToggleRow,
             waterLabel, waterSlider,
             snowLabel, snowSlider,
             seedLabel, seedRow,
             sizeLabel, sizeSlider,
             noiseScaleLabel, noiseScaleSlider,
             noiseTypeLabel, noiseTypeSelector,
+            heightScaleLabel, heightScaleSlider,
+            detailLabel, detailSlider,
             generateButton, saveButton,
             extremityLabel, extremitySlider,
             persistenceLabel, persistenceSlider,
@@ -171,12 +212,13 @@ public class UIBuilder {
         mapView.setFitWidth(width * 0.75);
         mapView.setFitHeight(height);
 
-        VBox map = new VBox();
-        map.setPrefWidth(width * 0.75);
-        map.setStyle("-fx-background-color: #e4dada83;");
-        map.getChildren().addAll(mapView);
+        rightPane = new StackPane();
+        rightPane.setPrefWidth(width * 0.75);
+        rightPane.setPrefHeight(height);
+        rightPane.setStyle("-fx-background-color: #e4dada83;");
+        rightPane.getChildren().add(mapView);
 
-        layout = new HBox(control, map);
+        layout = new HBox(control, rightPane);
     }
 
     public void removeSpecialSliders(HBox box){
