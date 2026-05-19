@@ -143,7 +143,7 @@ public class UIBuilder {
         persistenceSlider.setPrefHeight(width * 0.2);
 
         octaveLabel = new Label("Octaves");
-        this.octaveSlider = new Slider(1, 12, 1);
+        this.octaveSlider = new Slider(1, 100, 1);
         octaveSlider.setShowTickLabels(true);
         octaveSlider.setPrefHeight(width * 0.2);
 
@@ -160,7 +160,7 @@ public class UIBuilder {
 
         noiseTypeLabel = new Label("Noise Type");
         this.noiseTypeSelector = new ComboBox<>();
-        noiseTypeSelector.getItems().addAll("Value", "Perlin", "White", "Simplex", "Fractal Perlin");
+        noiseTypeSelector.getItems().addAll("Value", "Perlin", "White", "Simplex", "Fractal Perlin", "Eroded Perlin");
         noiseTypeSelector.setValue("Fractal Perlin");
         noiseTypeSelector.setPrefWidth(width * 0.2);
 

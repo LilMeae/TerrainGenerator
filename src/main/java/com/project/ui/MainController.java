@@ -17,7 +17,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class MainController {
     private UIBuilder ui;
     private final TerrainView3D view3D;
-    private String[] specialNoiseTypes = {"Fractal Perlin"};
+    private String[] specialNoiseTypes = {"Fractal Perlin", "Eroded Perlin"};
 
     public MainController(UIBuilder ui){
         this.ui = ui;
@@ -61,6 +61,7 @@ public class MainController {
             case "Perlin" -> NoiseType.PERLIN;
             case "Simplex" -> NoiseType.SIMPLEX;
             case "Fractal Perlin" -> NoiseType.FRACTAL_PERLIN;
+            case "Eroded Perlin" -> NoiseType.ERODED_PERLIN;
             default -> NoiseType.WHITE;
         };
         int heightMap[][] = NoiseGenerator.generateNoise(size, size, noiseScale,seed, persistance, octaves, lacunarity, extremity, noiseTypeValue);
