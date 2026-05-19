@@ -10,6 +10,7 @@ import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
@@ -122,6 +123,18 @@ public class TerrainView3D {
         meshView.setCullFace(CullFace.NONE);
 
         terrainGroup.getChildren().setAll(meshView);
+
+        double waterY = -(waterLevel * heightScale * WORLD_EXTENT);
+
+        Box water = new Box(WORLD_EXTENT, 0.01, WORLD_EXTENT);
+        water.setTranslateY(waterY);
+
+        PhongMaterial waterMat = new PhongMaterial();
+        waterMat.setDiffuseColor(Color.rgb(60, 140, 210, 0.55));
+        waterMat.setSpecularColor(Color.rgb(200, 220, 240));
+        water.setMaterial(waterMat);
+
+        waterGroup.getChildren().setAll(water);
     }
 
     public void resetCamera() {
