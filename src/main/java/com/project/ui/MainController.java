@@ -16,13 +16,29 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MainController {
     private UIBuilder ui;
+    private final TerrainView3D view3D;
     private String[] specialNoiseTypes = {"Fractal Perlin"};
 
     public MainController(UIBuilder ui){
         this.ui = ui;
+        this.view3D = new TerrainView3D(
+            ui.getRightPane().getPrefWidth(),
+            ui.getRightPane().getPrefHeight()
+        );
+        ui.getRightPane().getChildren().add(view3D.getNode());
+        view3D.getNode().setVisible(false);
+        view3D.getNode().setManaged(false);
+
         ui.getGenerateButton().setOnAction(e -> onGenerate());
         ui.getSaveButton().setOnAction(e -> onSave());
         ui.getNoiseTypeSelector().setOnAction(e -> onChangeTerrainType());
+        ui.getViewToggleGroup().selectedToggleProperty().addListener((obs, oldT, newT) -> {
+            if (newT == null && oldT != null) {
+                oldT.setSelected(true);
+                return;
+            }
+            onViewToggle();
+        });
     }
 
     private void onGenerate(){
@@ -112,6 +128,14 @@ public class MainController {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void onViewToggle() {
+        boolean is3D = ui.getView3DButton().isSelected();
+        ui.getMapView().setVisible(!is3D);
+        ui.getMapView().setManaged(!is3D);
+        view3D.getNode().setVisible(is3D);
+        view3D.getNode().setManaged(is3D);
     }
 
     private void onChangeTerrainType(){
