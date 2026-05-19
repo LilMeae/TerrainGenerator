@@ -52,6 +52,8 @@ public class MainController {
         int octaves = (int)ui.getOctaveSlider().getValue();
         double lacunarity = ui.getLacunaritySlider().getValue();
         double extremity = ui.getExtremitySlider().getValue();
+        double heightScale = ui.getHeightScaleSlider().getValue();
+        int lod = (int) ui.getDetailSlider().getValue();
         NoiseType noiseTypeValue;
 
         noiseTypeValue = switch (noiseType) {
@@ -72,7 +74,9 @@ public class MainController {
             }
         }
 
-        ui.getMapView().setImage(SwingFXUtils.toFXImage(img, null));
+        javafx.scene.image.Image fxImage = SwingFXUtils.toFXImage(img, null);
+        ui.getMapView().setImage(fxImage);
+        view3D.update(heightMap, fxImage, water, heightScale, lod);
     }
 
     private Color getTerrainColor(float value, double waterLevel, double snowLevel){
