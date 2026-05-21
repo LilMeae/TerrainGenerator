@@ -19,6 +19,8 @@ import javafx.scene.shape.VertexFormat;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
+
+//ai slop
 public class TerrainView3D {
 
     static final double WORLD_EXTENT = 256.0;
