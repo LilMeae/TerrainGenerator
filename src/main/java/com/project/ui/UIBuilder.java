@@ -189,7 +189,7 @@ public class UIBuilder {
         control.setId("control");
         control.setPrefWidth(width * 0.25);
         control.setStyle("-fx-background-color: #2f2c2c6f;");
-        control.setSpacing(8);
+        control.setSpacing(4);
         control.setPadding(new Insets(16));
         control.getChildren().addAll(
             viewToggleRow,
