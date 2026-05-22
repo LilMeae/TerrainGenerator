@@ -1,11 +1,9 @@
 package com.project.noiseTypes;
 
-import com.project.NoiseGenerator;
+public class ErodedSimplexNoise extends SimplexBase {
 
-public class ErodedPerlinNoise extends PerlinBase{
+    private double EROSION_STRENGTH = 3.0;
 
-    private static final double EROSION_STRENGTH = 3.0;
-    
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
         int[][] finalArray = new int[yWidth][xWidth];
@@ -27,9 +25,9 @@ public class ErodedPerlinNoise extends PerlinBase{
 
                     //approximate the local gradient by using h value as 0.001
                     double h = 1e-3;
-                    double v = samplePerlin(seed + i, px, py);
-                    double vdx = samplePerlin(seed + i, px + h, py);
-                    double vdy = samplePerlin(seed + i, px, py + h);
+                    double v = sampleSimplex(seed + i, px, py);
+                    double vdx = sampleSimplex(seed + i, px + h, py);
+                    double vdy = sampleSimplex(seed + i, px, py + h);
 
                     double dndx = (vdx - v) / h; //dnoise/dx
                     double dndy = (vdy - v) / h; //dnoise/dy

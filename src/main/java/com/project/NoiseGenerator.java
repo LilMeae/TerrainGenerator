@@ -1,7 +1,7 @@
 package com.project;
 
 import com.project.noiseTypes.ErodedPerlinNoise;
-import com.project.noiseTypes.PerlinFractalNoise;
+import com.project.noiseTypes.FractalPerlinNoise;
 import com.project.noiseTypes.PerlinNoise;
 import com.project.noiseTypes.SimplexNoise;
 import com.project.noiseTypes.ValueNoise;
@@ -24,7 +24,7 @@ public class NoiseGenerator {
             case WHITE -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case PERLIN -> new PerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
             case SIMPLEX -> new SimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-            case FRACTAL_PERLIN -> new PerlinFractalNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
+            case FRACTAL_PERLIN -> new FractalPerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             case ERODED_PERLIN -> new ErodedPerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             default -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
         };
