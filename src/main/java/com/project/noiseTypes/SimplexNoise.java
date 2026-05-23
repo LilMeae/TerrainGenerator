@@ -1,15 +1,9 @@
 package com.project.noiseTypes;
 
-import com.project.NoiseGenerator;
-
 public class SimplexNoise extends SimplexBase{
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
-        return generateNoise(seed, xWidth, yWidth, noiseScale);
-    }
-
-    public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale){
-        int[][] finalArray = new int[yWidth][xWidth];
+                int[][] finalArray = new int[yWidth][xWidth];
         for(int y = 0; y < finalArray.length; y++){
             for(int x = 0; x < finalArray[y].length; x++){
                 double px = ((double) x / xWidth) * noiseScale;

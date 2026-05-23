@@ -6,12 +6,7 @@ public class PerlinNoise implements NoiseTemplate{
     
     public PerlinNoise(){};
 
-    @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
-        return generateNoise(seed, xWidth, yWidth, noiseScale);
-    }
-
-    public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale) {
         int[][] finalArray = new int[yWidth][xWidth];
         for (int y = 0; y < finalArray.length; y++) {
             for (int x = 0; x < finalArray[y].length; x++) {
