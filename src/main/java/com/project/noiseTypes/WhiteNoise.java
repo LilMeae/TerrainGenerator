@@ -4,8 +4,6 @@ import com.project.NoiseGenerator;
 
 public class WhiteNoise implements NoiseTemplate{
 
-    public WhiteNoise(){};
-
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
         return generateNoise(seed, xWidth, yWidth, noiseScale);
@@ -15,6 +13,7 @@ public class WhiteNoise implements NoiseTemplate{
         int[][] finalArray = new int[yWidth][xWidth];
         for(int y = 0; y < finalArray.length; y++){
             for(int x = 0; x < finalArray[y].length; x++){
+                //every pixel gets a completely random value
                 finalArray[y][x] = (int)Math.round((NoiseGenerator.doubleHash(x^ 1863640L * y * 345345345, seed)*255));//Not random watch out
             }
         }
