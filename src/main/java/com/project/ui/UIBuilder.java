@@ -133,7 +133,7 @@ public class UIBuilder {
         noiseScaleSlider.setPrefWidth(width * 0.2);
         
         extremityLabel = new Label ("Extremity");
-        this.extremitySlider = new Slider(1, 10, 1);
+        this.extremitySlider = new Slider(1, 3, 1);
         extremitySlider.setShowTickLabels(true);
         extremitySlider.setPrefWidth(width*0.2);
 
@@ -173,7 +173,7 @@ public class UIBuilder {
         HBox viewToggleRow = new HBox(8, view2DButton, view3DButton);
 
         heightScaleLabel = new Label("Height Scale");
-        this.heightScaleSlider = new Slider(0.05, 0.5, 0.25);
+        this.heightScaleSlider = new Slider(0.05, 0.5, 0.125);
         heightScaleSlider.setShowTickLabels(true);
         heightScaleSlider.setPrefWidth(width * 0.2);
 
