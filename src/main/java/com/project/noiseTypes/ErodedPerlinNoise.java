@@ -7,6 +7,10 @@ public class ErodedPerlinNoise implements NoiseTemplate{
     private static final double EROSION_STRENGTH = 3.0;
     //solves the issue that steep mountain gets same level of fine detail as smooth flat terrain.
     //goal is to add less detail when terrain is steep
+    /**
+     * Generates eroded fractal perlin noise
+     * All values in the range of [0 - 255]
+     */
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
         int[][] finalArray = new int[yWidth][xWidth];

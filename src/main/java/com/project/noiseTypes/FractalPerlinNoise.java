@@ -4,6 +4,10 @@ import com.project.NoiseGenerator;
 
 public class FractalPerlinNoise implements NoiseTemplate{
     
+    /**
+     * Generates fractal perlin noise
+     * All values in the range of [0 - 255]
+     */
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
 

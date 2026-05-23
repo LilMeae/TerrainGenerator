@@ -3,7 +3,10 @@ package com.project.noiseTypes;
 import com.project.NoiseGenerator;
 
 public class PerlinNoise implements NoiseTemplate{
-
+    /**
+     * Generates perlin noise
+     * All values in the range of [0 - 255]
+     */
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
         int[][] finalArray = new int[yWidth][xWidth];
         for (int y = 0; y < finalArray.length; y++) {

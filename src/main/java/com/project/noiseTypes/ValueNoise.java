@@ -4,13 +4,10 @@ import com.project.NoiseGenerator;
 
 public class ValueNoise implements NoiseTemplate {
     /**
-     * Value noise aims to generate heightmap by assigning random value to grid corners, then smoothening everything in between to get smooth terrain that makes sense
-     * @param seed the seed
-     * @param xWidth how big the x component of the map is
-     * @param yWidth how big the y component of the map is
-     * @param noiseScale how big is the noise 2d array
-     * @return a 2D height map from value noise
+     * Generates value noise
+     * All values in the range of [0 - 255]
      */
+    @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
         //this gives us a grid of random values
         //noise scale is how many points are in this grid

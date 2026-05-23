@@ -3,6 +3,10 @@ package com.project.noiseTypes;
 import com.project.NoiseGenerator;
 
 public class SimplexNoise implements NoiseTemplate{
+    /**
+     * Generates simplex noise
+     * All values in the range of [0 - 255]
+     */
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
                 int[][] finalArray = new int[yWidth][xWidth];
