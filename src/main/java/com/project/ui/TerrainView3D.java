@@ -1,13 +1,18 @@
 package com.project.ui;
 
+import java.awt.image.BufferedImage;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -180,5 +185,37 @@ public class TerrainView3D {
         yaw.setAngle(45);
         pitch.setAngle(-30);
         cameraTranslate.setZ(-1.8 * WORLD_EXTENT);
+    }
+
+    /**
+     * Renders the current 3D scene to a BufferedImage at the requested pixel
+     * dimensions. The SubScene is temporarily resized to (width, height) for
+     * the snapshot and restored immediately afterward; because this all runs
+     * on the JavaFX Application Thread inside a single event handler, the
+     * resize is not visible to the user.
+     *
+     * Returns null if no terrain mesh has been built yet.
+     */
+    public BufferedImage snapshot(int width, int height) {
+        if (terrainGroup.getChildren().isEmpty()) {
+            return null;
+        }
+
+        double originalWidth  = subScene.getWidth();
+        double originalHeight = subScene.getHeight();
+
+        subScene.setWidth(width);
+        subScene.setHeight(height);
+
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.rgb(180, 195, 210));
+
+        WritableImage fxImage = new WritableImage(width, height);
+        subScene.snapshot(params, fxImage);
+
+        subScene.setWidth(originalWidth);
+        subScene.setHeight(originalHeight);
+
+        return SwingFXUtils.fromFXImage(fxImage, null);
     }
 }
