@@ -18,6 +18,8 @@ public class MainController {
     private UIBuilder ui;
     private final TerrainView3D view3D;
     private String[] specialNoiseTypes = {"Fractal Perlin", "Eroded Perlin", "Fractal Simplex", "Eroded Simplex"};
+    private static final int SNAPSHOT_WIDTH  = 1920;
+    private static final int SNAPSHOT_HEIGHT = 1080;
 
     public MainController(UIBuilder ui){
         this.ui = ui;
@@ -134,13 +136,22 @@ public class MainController {
         fileChooser.setTitle("Save Terrain Map");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
         File file = fileChooser.showSaveDialog(null);
-        if (file != null){
-            try {
-                BufferedImage img = SwingFXUtils.fromFXImage(ui.getMapView().getImage(), null);
-                ImageIO.write(img, "png", file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (file == null) return;
+
+        BufferedImage img;
+        if (ui.getView3DButton().isSelected()) {
+            img = view3D.snapshot(SNAPSHOT_WIDTH, SNAPSHOT_HEIGHT);
+        } else {
+            javafx.scene.image.Image fxImage = ui.getMapView().getImage();
+            if (fxImage == null) return;
+            img = SwingFXUtils.fromFXImage(fxImage, null);
+        }
+        if (img == null) return;
+
+        try {
+            ImageIO.write(img, "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
