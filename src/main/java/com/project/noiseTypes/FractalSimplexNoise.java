@@ -1,6 +1,8 @@
 package com.project.noiseTypes;
 
-public class FractalSimplexNoise extends SimplexBase {
+import com.project.NoiseGenerator;
+
+public class FractalSimplexNoise implements NoiseTemplate {
 
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
@@ -17,7 +19,7 @@ public class FractalSimplexNoise extends SimplexBase {
                 for (int i = 0; i < octaves; i++) {
                     double px = ((double) x / xWidth) * noiseScale * frequency;
                     double py = ((double) y / yWidth) * noiseScale * frequency;
-                    total += sampleSimplex(seed + i, px, py) * amplitude;
+                    total += NoiseGenerator.sampleSimplex(seed + i, px, py) * amplitude;
                     maxValue += amplitude;
                     amplitude *= persistence;
                     frequency *= lacunarity;

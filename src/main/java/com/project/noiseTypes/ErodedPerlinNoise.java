@@ -2,7 +2,7 @@ package com.project.noiseTypes;
 
 import com.project.NoiseGenerator;
 
-public class ErodedPerlinNoise extends PerlinBase{
+public class ErodedPerlinNoise implements NoiseTemplate{
 
     private static final double EROSION_STRENGTH = 3.0;
     //solves the issue that steep mountain gets same level of fine detail as smooth flat terrain.
@@ -30,9 +30,9 @@ public class ErodedPerlinNoise extends PerlinBase{
                     //math is lim h -> 0 (f(x + h) - f(x)) / h to approximate slope at x
                     //set h to 0.001
                     double h = 1e-3;
-                    double v = samplePerlin(seed + i, px, py);
-                    double vdx = samplePerlin(seed + i, px + h, py);
-                    double vdy = samplePerlin(seed + i, px, py + h);
+                    double v = NoiseGenerator.samplePerlin(seed + i, px, py);
+                    double vdx = NoiseGenerator.samplePerlin(seed + i, px + h, py);
+                    double vdy = NoiseGenerator.samplePerlin(seed + i, px, py + h);
 
                     //these two form the gradient vector, which points in the direction of steepest ascent
                     double dndx = (vdx - v) / h; //dnoise/dx

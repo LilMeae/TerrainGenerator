@@ -2,7 +2,7 @@ package com.project.noiseTypes;
 
 import com.project.NoiseGenerator;
 
-public class FractalPerlinNoise extends PerlinBase{
+public class FractalPerlinNoise implements NoiseTemplate{
     
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
@@ -26,7 +26,7 @@ public class FractalPerlinNoise extends PerlinBase{
                     double py = ((double) y / yWidth) * noiseScale * frequency;
                     //adds a scaled down version of the sample perlin noise at that location
                     //seed + i to ensure different noise
-                    total += samplePerlin(seed + i, px, py) * amplitude;
+                    total += NoiseGenerator.samplePerlin(seed + i, px, py) * amplitude;
                     //track total amplitude
                     maxValue += amplitude;
                     //lowers amplitude so smaller features have less weight

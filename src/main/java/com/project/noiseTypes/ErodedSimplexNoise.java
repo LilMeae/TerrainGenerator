@@ -1,6 +1,8 @@
 package com.project.noiseTypes;
 
-public class ErodedSimplexNoise extends SimplexBase {
+import com.project.NoiseGenerator;
+
+public class ErodedSimplexNoise implements NoiseTemplate {
 
     private double EROSION_STRENGTH = 3.0;
 
@@ -26,9 +28,9 @@ public class ErodedSimplexNoise extends SimplexBase {
                     double py = ((double) y / yWidth) * noiseScale * frequency;
 
                     double h = 1e-3;
-                    double v = sampleSimplex(seed + i, px, py);
-                    double vdx = sampleSimplex(seed + i, px + h, py);
-                    double vdy = sampleSimplex(seed + i, px, py + h);
+                    double v = NoiseGenerator.sampleSimplex(seed + i, px, py);
+                    double vdx = NoiseGenerator.sampleSimplex(seed + i, px + h, py);
+                    double vdy = NoiseGenerator.sampleSimplex(seed + i, px, py + h);
 
                     double dndx = (vdx - v) / h; 
                     double dndy = (vdy - v) / h; 

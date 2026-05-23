@@ -2,8 +2,7 @@ package com.project.noiseTypes;
 
 import com.project.NoiseGenerator;
 
-public class PerlinNoise extends PerlinBase{
-
+public class PerlinNoise implements NoiseTemplate{
 
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
         int[][] finalArray = new int[yWidth][xWidth];
@@ -12,7 +11,7 @@ public class PerlinNoise extends PerlinBase{
                 //same as value noise, compresses the x and y coord into one that fits on the noisescale
                 double px = ((double)(x) / xWidth) * noiseScale;
                 double py = ((double)(y) / yWidth) * noiseScale;
-                double value = samplePerlin(seed, px, py);
+                double value = NoiseGenerator.samplePerlin(seed, px, py);
 
                 //gets normalized to [0, 255]
                 finalArray[y][x] = (int) Math.round(((value + 1) / 2.0) * 255);
