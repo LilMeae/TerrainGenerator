@@ -25,15 +25,15 @@ public class NoiseGenerator {
     public static int[][] generateNoise(int xWidth, int yWidth, int noiseScale, long seed, double persistence, int octaves, double lacunarity, double extremity, NoiseType noise) {
         //generates the height map according to the noise
         int[][] heightMap = switch (noise) {
-            case VALUE -> new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-            case WHITE -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-            case PERLIN -> new PerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
-            case SIMPLEX -> new SimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            case VALUE -> new ValueNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
+            case WHITE -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
+            case PERLIN -> new PerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
+            case SIMPLEX -> new SimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             case FRACTAL_PERLIN -> new FractalPerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             case ERODED_PERLIN -> new ErodedPerlinNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             case FRACTAL_SIMPLEX -> new FractalSimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
             case ERODED_SIMPLEX -> new ErodedSimplexNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
-            default -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale);
+            default -> new WhiteNoise().generateNoise(seed, xWidth, yWidth, noiseScale, persistence, octaves, lacunarity);
         };
 
         double max = 0;
