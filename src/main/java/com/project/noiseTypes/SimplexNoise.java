@@ -1,6 +1,10 @@
 package com.project.noiseTypes;
 
 public class SimplexNoise extends SimplexBase{
+    /**
+     * Generates simplex noise
+     * All values in the range of [0 - 255]
+     */
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
                 int[][] finalArray = new int[yWidth][xWidth];

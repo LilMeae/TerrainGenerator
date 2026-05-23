@@ -1,9 +1,11 @@
 package com.project.noiseTypes;
 
-import com.project.NoiseGenerator;
-
 public class FractalPerlinNoise extends PerlinBase{
     
+    /**
+     * Generates fractal perlin noise
+     * All values in the range of [0 - 255]
+     */
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
 

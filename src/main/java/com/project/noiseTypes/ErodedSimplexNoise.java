@@ -4,6 +4,10 @@ public class ErodedSimplexNoise extends SimplexBase {
 
     private double EROSION_STRENGTH = 3.0;
 
+    /**
+     * Generates eroded fractal simplex noise
+     * All values in the range of [0 - 255]
+     */
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity){
         
