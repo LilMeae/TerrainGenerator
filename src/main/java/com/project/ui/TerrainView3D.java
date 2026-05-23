@@ -194,7 +194,9 @@ public class TerrainView3D {
      * on the JavaFX Application Thread inside a single event handler, the
      * resize is not visible to the user.
      *
-     * Returns null if no terrain mesh has been built yet.
+     * <p>Must be called from the JavaFX Application Thread.
+     *
+     * <p>Returns null if no terrain mesh has been built yet.
      */
     public BufferedImage snapshot(int width, int height) {
         if (terrainGroup.getChildren().isEmpty()) {
@@ -207,14 +209,15 @@ public class TerrainView3D {
         subScene.setWidth(width);
         subScene.setHeight(height);
 
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.rgb(180, 195, 210));
-
         WritableImage fxImage = new WritableImage(width, height);
-        subScene.snapshot(params, fxImage);
-
-        subScene.setWidth(originalWidth);
-        subScene.setHeight(originalHeight);
+        try {
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill(Color.rgb(180, 195, 210));
+            subScene.snapshot(params, fxImage);
+        } finally {
+            subScene.setWidth(originalWidth);
+            subScene.setHeight(originalHeight);
+        }
 
         return SwingFXUtils.fromFXImage(fxImage, null);
     }
