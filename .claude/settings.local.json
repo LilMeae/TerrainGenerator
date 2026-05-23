@@ -7,7 +7,9 @@
       "Skill(superpowers:writing-plans)",
       "Skill(superpowers:subagent-driven-development)",
       "Bash(mvn -q compile)",
-      "Bash(mvn compile *)"
+      "Bash(mvn compile *)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(echo \"BUILD_EXIT: $?\")"
     ]
   }
 }
