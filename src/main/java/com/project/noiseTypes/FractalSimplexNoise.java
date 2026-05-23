@@ -5,6 +5,7 @@ public class FractalSimplexNoise extends SimplexBase {
     @Override
     public int[][] generateNoise(long seed, int xWidth, int yWidth, int noiseScale, double persistence, int octaves, double lacunarity) {
 
+        //same logic as fractal perlin, but instead of perlin noise sample we do simplex noise sample
         int[][] finalArray = new int[yWidth][xWidth];
         for (int y = 0; y < finalArray.length; y++) {
             for (int x = 0; x < finalArray[y].length; x++) {

@@ -92,7 +92,7 @@ public class MainController {
         }       
 
         //sand to grass
-        double sandEnd = waterLevel + 0.05f;
+        double sandEnd = waterLevel + 0.05;
         if (value < sandEnd) {
             double t = (value - waterLevel) / (sandEnd - waterLevel);
             return blendColors(new Color(210, 180, 140), new Color(210, 180, 140), t);
@@ -115,6 +115,13 @@ public class MainController {
         return new Color(255, 255, 255);
     }
 
+    /**
+     * Same linear interpolation function that was in noise generator
+     * @param a the lower bound
+     * @param b the upper boound
+     * @param t the actual value
+     * @return the linear approximation 
+     */
     private Color blendColors(Color a, Color b, double t){
         int r = (int)(a.getRed() + t * (b.getRed() - a.getRed()));
         int g = (int)(a.getGreen() + t * (b.getGreen() - a.getGreen()));
