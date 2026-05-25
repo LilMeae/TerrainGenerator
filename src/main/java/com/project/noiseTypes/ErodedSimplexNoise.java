@@ -4,7 +4,7 @@ import com.project.NoiseGenerator;
 
 public class ErodedSimplexNoise implements NoiseTemplate {
 
-    private double EROSION_STRENGTH = 3.0;
+    private final double EROSION_STRENGTH = 3.0;
 
     /**
      * Generates eroded fractal simplex noise
