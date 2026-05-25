@@ -47,7 +47,13 @@ public class MainController {
         double water = ui.getWaterSlider().getValue();
         double snow = ui.getSnowSlider().getValue();
         int size = (int)ui.getSizeSlider().getValue();
-        long seed = Long.parseLong(ui.getSeedField().getText());
+        long seed;
+        try {
+            seed = Long.parseLong(ui.getSeedField().getText());
+        }
+        catch (NumberFormatException e){
+            return;
+        }
         int noiseScale = (int) ui.getNoiseScaleSlider().getValue();
         String noiseType = ui.getNoiseTypeSelector().getValue();
         double persistance = ui.getPersistenceSlider().getValue();
