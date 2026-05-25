@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class UIBuilder {
+    //self-explanatory by name
     private Label waterLabel;
     private Slider waterSlider;
     private Label snowLabel;
@@ -47,6 +48,7 @@ public class UIBuilder {
     private StackPane rightPane;
     private HBox layout;
 
+    //getter methods
     public Slider getWaterSlider(){
         return waterSlider;
     }
@@ -96,13 +98,30 @@ public class UIBuilder {
         return extremitySlider;
     }
 
-    public ToggleGroup getViewToggleGroup() { return viewToggleGroup; }
-    public ToggleButton getView2DButton()   { return view2DButton; }
-    public ToggleButton getView3DButton()   { return view3DButton; }
-    public Slider getHeightScaleSlider()    { return heightScaleSlider; }
-    public Slider getDetailSlider()         { return detailSlider; }
-    public StackPane getRightPane()         { return rightPane; }
+    public ToggleGroup getViewToggleGroup(){ 
+        return viewToggleGroup; 
+    }
+    public ToggleButton getView2DButton(){
+        return view2DButton;
+    }
+    public ToggleButton getView3DButton(){
+        return view3DButton;
+    }
+    public Slider getHeightScaleSlider(){
+        return heightScaleSlider;
+    }
+    public Slider getDetailSlider(){
+        return detailSlider; 
+    }
+    public StackPane getRightPane(){
+        return rightPane; 
+    }
 
+    /**
+     * Builds the entire layout of the UI layer
+     * @param width the width of the screen
+     * @param height the height of the screen
+     */
     public void buildLayout(double width, double height){
         waterLabel = new Label("Water Level");
         this.waterSlider = new Slider(0, 1, 0.4);
@@ -114,10 +133,12 @@ public class UIBuilder {
         snowSlider.setShowTickLabels(true);
         snowSlider.setPrefWidth(width * 0.2);
 
+        //defaults to a randomized value
         seedLabel = new Label("Seed");
         this.seedField = new TextField(String.valueOf((long)(Math.random() * Long.MAX_VALUE)));
         seedField.setPrefWidth(width * 0.14);
 
+        //gets a reroll
         Button rerollButton = new Button("⟳");
         rerollButton.setOnAction(e -> seedField.setText(String.valueOf((long)(Math.random() * Long.MAX_VALUE))));
         HBox seedRow = new HBox(8, seedField, rerollButton);
@@ -132,6 +153,7 @@ public class UIBuilder {
         noiseScaleSlider.setShowTickLabels(true);
         noiseScaleSlider.setPrefWidth(width * 0.2);
         
+        //explanations for these varaibles can be found in the eroded classes
         extremityLabel = new Label ("Extremity");
         this.extremitySlider = new Slider(1, 3, 1);
         extremitySlider.setShowTickLabels(true);
@@ -164,6 +186,7 @@ public class UIBuilder {
         noiseTypeSelector.setValue("Fractal Perlin");
         noiseTypeSelector.setPrefWidth(width * 0.2);
 
+        //AI generated for the 3D part
         viewToggleGroup = new ToggleGroup();
         view2DButton = new ToggleButton("2D");
         view3DButton = new ToggleButton("3D");
@@ -185,6 +208,7 @@ public class UIBuilder {
         detailSlider.setMinorTickCount(0);
         detailSlider.setPrefWidth(width * 0.2);
 
+        //adds every slider and button to a vertical group to be displayed on the left
         VBox control = new VBox();
         control.setId("control");
         control.setPrefWidth(width * 0.25);
@@ -208,6 +232,7 @@ public class UIBuilder {
             octaveLabel, octaveSlider
         );
         
+        //map on the right side
         this.mapView = new ImageView();
         mapView.setFitWidth(width * 0.75);
         mapView.setFitHeight(height);
@@ -221,6 +246,10 @@ public class UIBuilder {
         layout = new HBox(control, rightPane);
     }
 
+    /**
+     * Removes the special sliders for eroded and fractal variants
+     * 
+     */
     public void removeSpecialSliders(HBox box){
         VBox vbox = (VBox) box.getChildren().stream()
          .filter(node -> node instanceof VBox && "control".equals(node.getId()))
@@ -234,6 +263,10 @@ public class UIBuilder {
         );
     }
 
+    /**
+     * Adds the special sliders for eroded and fractal variants
+     * 
+     */
     public void addSpecialSliders (HBox box){
         VBox vbox = (VBox) box.getChildren().stream()
          .filter(node -> node instanceof VBox && "control".equals(node.getId()))

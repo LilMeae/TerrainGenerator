@@ -47,10 +47,12 @@ public class MainController {
      * Callback for the generate button
      */
     private void onGenerate(){
+        //gets the parameters from the UI
         double water = ui.getWaterSlider().getValue();
         double snow = ui.getSnowSlider().getValue();
         int size = (int)ui.getSizeSlider().getValue();
         long seed;
+        //in case the seed contains letters/non-numbers
         try {
             seed = Long.parseLong(ui.getSeedField().getText());
         }
@@ -67,6 +69,7 @@ public class MainController {
         int lod = (int) ui.getDetailSlider().getValue();
         NoiseType noiseTypeValue;
 
+        //noise type
         noiseTypeValue = switch (noiseType) {
             case "Value" -> NoiseType.VALUE;
             case "Perlin" -> NoiseType.PERLIN;
