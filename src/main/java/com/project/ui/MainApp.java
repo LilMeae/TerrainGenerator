@@ -13,14 +13,17 @@ public class MainApp extends Application{
 
     @Override
     public void start(Stage primaryStage){
+        //gets the dimensions of the screen
         double width = Screen.getPrimary().getBounds().getWidth();
         double height = Screen.getPrimary().getBounds().getHeight();
 
+        //creates instances of ui builder and controller
         UIBuilder ui = new UIBuilder();
         ui.buildLayout(width, height);
         HBox layout = ui.getLayout();
         MainController controller = new MainController(ui);
 
+        //displays the UI stuff
         Scene scene = new Scene(layout, width, height);
         primaryStage.setTitle("Terrain Generator");
         primaryStage.setScene(scene);
