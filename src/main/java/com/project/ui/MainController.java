@@ -43,6 +43,9 @@ public class MainController {
         });
     }
 
+    /**
+     * Callback for the generate button
+     */
     private void onGenerate(){
         double water = ui.getWaterSlider().getValue();
         double snow = ui.getSnowSlider().getValue();
@@ -76,6 +79,7 @@ public class MainController {
         };
         int heightMap[][] = NoiseGenerator.generateNoise(size, size, noiseScale,seed, persistance, octaves, lacunarity, extremity, noiseTypeValue);
 
+        //Create 2D image
         BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < size; y++){
             for (int x = 0; x < size; x++){
@@ -84,12 +88,19 @@ public class MainController {
                 img.setRGB(x, y, color.getRGB());
             }
         }
-
         javafx.scene.image.Image fxImage = SwingFXUtils.toFXImage(img, null);
         ui.getMapView().setImage(fxImage);
+        //Update 3D view
         view3D.update(heightMap, fxImage, water, heightScale, lod);
     }
 
+    /**
+     * Returns the correct color for a given pixel of the generated terrain
+     * @param value height value from 0-1
+     * @param waterLevel water level
+     * @param snowLevel snow level
+     * @return Color of the pixel
+     */
     private Color getTerrainColor(float value, double waterLevel, double snowLevel){
         //water to sand
         if (value < waterLevel) {
@@ -137,6 +148,9 @@ public class MainController {
         return new Color(r, g, bl);
     }
 
+    /**
+     * Callback for the save button
+     */
     private void onSave(){
         //checks if image exists/is generated in the first place
         boolean is3D = ui.getView3DButton().isSelected();
@@ -166,6 +180,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Callback for the view toggle button
+     */
     private void onViewToggle() {
         boolean is3D = ui.getView3DButton().isSelected();
         ui.getMapView().setVisible(!is3D);
@@ -174,16 +191,22 @@ public class MainController {
         view3D.getNode().setManaged(is3D);
     }
 
+    /**
+     * Callback for changing the terrain type
+     */
     private void onChangeTerrainType(){
+        //Checks if new terrain type is a 'special terrain type'
         boolean special = false;
         for(String noise : specialNoiseTypes){
             if(noise.equals(ui.getNoiseTypeSelector().getValue())){
                 special = true;
             }
         }
+        //Add in the special sliders if it is
         if(special){
             ui.addSpecialSliders(ui.getLayout());
         }
+        //Remove it otherwise
         else{
             ui.removeSpecialSliders(ui.getLayout());
         }

@@ -51,9 +51,7 @@ public class ValueNoise implements NoiseTemplate {
 
                 //scales this into [0, 255] and put that into the height array
                 finalArray[y][x] = (int)Math.round((value * 255));
-                System.out.print(finalArray[x][y]+" ");
             }
-            System.out.println();
         }
         return finalArray;
     }
