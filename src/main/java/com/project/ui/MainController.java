@@ -132,6 +132,11 @@ public class MainController {
     }
 
     private void onSave(){
+        //checks if image exists/is generated in the first place
+        boolean is3D = ui.getView3DButton().isSelected();
+        if (is3D && view3D.hasNoTerrain()) return;
+        if (!is3D && ui.getMapView().getImage() == null) return;
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Terrain Map");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
@@ -139,7 +144,7 @@ public class MainController {
         if (file == null) return;
 
         BufferedImage img;
-        if (ui.getView3DButton().isSelected()) {
+        if (is3D) {
             img = view3D.snapshot(SNAPSHOT_WIDTH, SNAPSHOT_HEIGHT);
         } else {
             javafx.scene.image.Image fxImage = ui.getMapView().getImage();

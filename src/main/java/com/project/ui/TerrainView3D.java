@@ -221,4 +221,8 @@ public class TerrainView3D {
 
         return SwingFXUtils.fromFXImage(fxImage, null);
     }
+
+    public boolean hasNoTerrain(){
+        return terrainGroup.getChildren().isEmpty();
+    }
 }
