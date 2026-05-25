@@ -202,13 +202,10 @@ public class MainController {
                 special = true;
             }
         }
+        ui.removeSpecialSliders(ui.getLayout());
         //Add in the special sliders if it is
         if(special){
             ui.addSpecialSliders(ui.getLayout());
-        }
-        //Remove it otherwise
-        else{
-            ui.removeSpecialSliders(ui.getLayout());
         }
     }
 }
